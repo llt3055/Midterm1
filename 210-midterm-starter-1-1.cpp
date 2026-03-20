@@ -49,14 +49,14 @@ public:
             delete newNode; // Reclaim memory to prevent a leak if insertion fails
             return;
         }
-
-        newNode->next = temp->next;
-        newNode->prev = temp;
-        if (temp->next)
-            temp->next->prev = newNode;
+        // Pointer redirection for the Doubly Linked structure
+        newNode->next = temp->next; // Connect new node forward to temp's successor
+        newNode->prev = temp;       // Connect new node backward to temp
+        if (temp->next)             // If temp is NOT the current tail
+            temp->next->prev = newNode; // Reassign the back-link of the successor
         else
-            tail = newNode;
-        temp->next = newNode;
+            tail = newNode;         // If temp was tail, new node becomes the new tail
+        temp->next = newNode;       // Connect temp forward to the new node, completing the insertion
     }
 
     void delete_val(int value) {
@@ -207,19 +207,25 @@ public:
         }
         cout << endl;
     }
+// New required method: Prints 1st, 3rd, 5th, etc. elements
+    void every_other_element() {
+    Node* current = head; // Start at the first element
+        while (current){ // Loop until we fall off the end of the list
+            cout << current->data ; // Print the data of the current node
+            if (current->->next) // Check if a next node exists to skip it
+                current = current->next; // Jump node forward
+            else {
+                // If there is no next node to jump over, we are at the end
+                current = nullptr; 
+            }             
+        }
+        cout << endl; // Print a newline for clean formatting
+    }
 };
 
 // New required method: Prints 1st, 3rd, 5th, etc. elements
-    Node* current = head; // Start at the first element
-    void every_other_element() {
-        while (current){ // Loop until we fall off the end of the list
-            cout << current->data ; // Print the data of the current node
-            if (current->next) // Check if a next node exists to skip it
-                current = current->next; // Jump node forward
-            else
-                
-        }
-    }
+   
+    
 
 int main() {
     cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
