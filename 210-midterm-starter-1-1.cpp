@@ -24,27 +24,29 @@ private:
     Node* tail; // Pointer to  end of the list
 
 public:
+    // Constructor: Initializes head and tail to null for an empty list
     DoublyLinkedList() { head = nullptr; tail = nullptr; }
-
+    // Adds a node after some position
     void insert_after(int value, int position) {
-        if (position < 0) {
-            cout << "Position must be >= 0." << endl;
+        if (position < 0) { // If position is bad
+            cout << "Position must be >= 0." << endl; // Show error
+            return; 
+        }
+
+        Node* newNode = new Node(value); // Make the node
+        if (!head) { // If list is empty
+            head = tail = newNode; // Set head and tail
             return;
         }
 
-        Node* newNode = new Node(value);
-        if (!head) {
-            head = tail = newNode;
-            return;
-        }
+        Node* temp = head; // Temp pointer
+        for (int i = 0; i < position && temp; ++i) // Find position
+            temp = temp->next; // Move forward
 
-        Node* temp = head;
-        for (int i = 0; i < position && temp; ++i)
-            temp = temp->next;
-
-        if (!temp) {
+        // Verify if the requested position actually exists within the list's bounds
+        if (!temp) { 
             cout << "Position exceeds list size. Node not inserted.\n";
-            delete newNode;
+            delete newNode; // Reclaim memory to prevent a leak if insertion fails
             return;
         }
 
@@ -208,8 +210,9 @@ public:
 };
 
 // New required method: Prints 1st, 3rd, 5th, etc. elements
+    Node* current = head; // Start at the first element
     void every_other_element() {
-        while (!current){ // Loop until we fall off the end of the list
+        while (current){ // Loop until we fall off the end of the list
             cout << current->data ; // Print the data of the current node
             if (current->next) // Check if a next node exists to skip it
                 current = current->next; // Jump node forward
