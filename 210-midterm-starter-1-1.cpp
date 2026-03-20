@@ -9,19 +9,19 @@ class DoublyLinkedList {
 private:
     // Struct representing a single node in the list
     struct Node {
-        int data;
-        Node* prev;
-        Node* next;
+        int data;   // Integer variable to store the node's value
+        Node* prev; // Pointer to the previous node in the sequence
+        Node* next; // Pointer to the next node in the sequence
     // Node constructor to initialize data and optional pointers
         Node(int val, Node* p = nullptr, Node* n = nullptr) {
-            data = val; 
-            prev = p;
-            next = n;
+            data = val; // Assign the passed value to data member
+            prev = p;   // Assign the passed previous pointer
+            next = n;   // Assign the passed next pointer
         }
     };
 
-    Node* head;
-    Node* tail;
+    Node* head; // Pointer to  beginning of the list
+    Node* tail; // Pointer to  end of the list
 
 public:
     DoublyLinkedList() { head = nullptr; tail = nullptr; }
@@ -206,6 +206,17 @@ public:
         cout << endl;
     }
 };
+
+// New required method: Prints 1st, 3rd, 5th, etc. elements
+    void every_other_element() {
+        while (!current){ // Loop until we fall off the end of the list
+            cout << current->data ; // Print the data of the current node
+            if (current->next) // Check if a next node exists to skip it
+                current = current->next; // Jump node forward
+            else
+                
+        }
+    }
 
 int main() {
     cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
