@@ -1,15 +1,18 @@
 // COMSC-210 | Midterm1| Tianyi Cao 
-#include <iostream>
-using namespace std;
+#include <iostream>// Includes the standard input-output stream library
+using namespace std;// Uses the standard namespace to avoid std:: prefix
 
+///Named constants to avoid "Magic Numbers"
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
 
 class DoublyLinkedList {
 private:
+    // Struct representing a single node in the list
     struct Node {
         int data;
         Node* prev;
         Node* next;
+    // Node constructor to initialize data and optional pointers
         Node(int val, Node* p = nullptr, Node* n = nullptr) {
             data = val; 
             prev = p;
