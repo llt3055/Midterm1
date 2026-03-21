@@ -1,6 +1,10 @@
 // COMSC-210 | Midterm1| Tianyi Cao 
 #include <iostream>// Includes the standard input-output stream library
+#include <ctime>
+#include <cstdlib>
+
 using namespace std;// Uses the standard namespace to avoid std:: prefix
+
 
 ///Named constants to avoid "Magic Numbers"
 const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
@@ -175,11 +179,12 @@ public:
         delete temp;
     }
 
+    // Destructor: Automatically called to reclaim all dynamically allocated memory
     ~DoublyLinkedList() {
-        while (head) {
-            Node* temp = head;
-            head = head->next;
-            delete temp;
+        while (head) { // Iterate through the entire list
+            Node* temp = head; // Temporarily store the current head pointer
+            head = head->next; // Advance head to the next node in the sequence
+            delete temp; // Free memory of the orphaned node to prevent leaks
         }
     }
     void print() {
@@ -212,7 +217,7 @@ public:
     Node* current = head; // Start at the first element
         while (current){ // Loop until we fall off the end of the list
             cout << current->data ; // Print the data of the current node
-            if (current->->next) // Check if a next node exists to skip it
+            if (current->next->next) // Check if a next node exists to skip it
                 current = current->next; // Jump node forward
             else {
                 // If there is no next node to jump over, we are at the end
@@ -229,7 +234,13 @@ public:
 
 int main() {
     cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
+    srand(static_cast<unsigned int>(time(0)));// Seed the random number generator with the current time for variability
+    DoublyLinkedList list;
 
+    cout << "Initial List:" << endl;
+    list.print();
+    cout << "\nEvery Other Element:" << endl;
+    list.every_other_element();
     
     return 0;
 }
