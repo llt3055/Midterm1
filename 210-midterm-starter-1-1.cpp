@@ -63,44 +63,50 @@ public:
         temp->next = newNode;       // Connect temp forward to the new node, completing the insertion
     }
 
+    // Searches for the first occurrence of a value and removes that node
     void delete_val(int value) {
-        if (!head) return;
+        if (!head) return; // Cannot delete from an empty list
 
-        Node* temp = head;
+        Node* temp = head; // Temporary pointer for searching
         
+        // Loop until we find the node containing the target value
         while (temp && temp->data != value)
             temp = temp->next;
 
+        // Exit if value was not found in the list
         if (!temp) return; 
 
+        // Update the 'next' pointer of the node before 'temp'
         if (temp->prev)
             temp->prev->next = temp->next;
         else
             head = temp->next; 
 
+        // Update the 'prev' pointer of the node after 'temp'
         if (temp->next)
             temp->next->prev = temp->prev;
         else
             tail = temp->prev; 
-
+        // Release the memory of the target node back to the system
         delete temp;
     }
 
+    // Removes a node based on its numerical 1-indexed position
     void delete_pos(int pos) {
-        if (!head) {
+        if (!head) { // Ensure there is data to delete
             cout << "List is empty." << endl;
             return;
         }
     
-        if (pos == 1) {
+        if (pos == 1) { // reuse pop_front if deleting the first element
             pop_front();
             return;
         }
     
-        Node* temp = head;
-    
+        Node* temp = head; // Traversal pointer
+        // Loop until the node at the specified position is reached
         for (int i = 1; i < pos; i++){
-            if (!temp) {
+            if (!temp) { // Handle out-of-range errors
                 cout << "Position doesn't exist." << endl;
                 return;
             }
@@ -187,6 +193,8 @@ public:
             delete temp; // Free memory of the orphaned node to prevent leaks
         }
     }
+
+    // Standard forward traversal printing from head to tail
     void print() {
         Node* current = head;
         if (!current) {
@@ -195,11 +203,12 @@ public:
         }
         while (current) {
             cout << current->data << " ";
-            current = current->next;
+            current = current->next; // Advance forward
         }
         cout << endl;
     }
 
+    // Reverse traversal printing from tail to head
     void print_reverse() {
         Node* current = tail;
         if (!current) { 
@@ -208,7 +217,7 @@ public:
         }
         while (current) {
             cout << current->data << " ";
-            current = current->prev;
+            current = current->prev; // Advance backward
         }
         cout << endl;
     }
@@ -233,14 +242,19 @@ public:
     
 
 int main() {
+
+    DoublyLinkedList list;
     cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
     srand(static_cast<unsigned int>(time(0)));// Seed the random number generator with the current time for variability
-    DoublyLinkedList list;
-
-    cout << "Initial List:" << endl;
+    // Fill list using random constants
+    int size = rand() % (MAX_LS - MIN_LS );
+    for (int i = 0; i < size; i++) {
+        list.push_back(rand() % (MAX_NR - MIN_NR ) );
+    }
+    cout << "Initial List:" << endl; // Demonstrate initial creation
     list.print();
-    cout << "\nEvery Other Element:" << endl;
+    cout << "\nEvery Other Element:" << endl; // Demonstrate the new every_other_element functionality
     list.every_other_element();
-    
+
     return 0;
 }
